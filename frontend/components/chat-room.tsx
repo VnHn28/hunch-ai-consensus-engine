@@ -114,17 +114,17 @@ export function ChatRoom({ state, onRefresh }: { state: RoomState; onRefresh: ()
       <div className="flex-1 space-y-3 overflow-y-auto pb-4">
         {history.map((b, i) =>
           b.from === "ai" ? (
-            <div key={i} className="max-w-[85%]">
+            <div key={i} className="animate-fade-up max-w-[85%]">
               <div className="mb-1 flex items-center gap-1 text-xs font-medium text-primary">
                 <Sparkles className="size-3" /> Hunch
               </div>
-              <div className="rounded-2xl rounded-tl-sm border border-border bg-card px-4 py-2.5 text-[15px] leading-snug">
+              <div className="rounded-2xl rounded-tl-sm border border-border bg-card px-4 py-2.5 text-[15px] leading-snug shadow-sm ring-1 ring-foreground/3">
                 {b.text}
               </div>
             </div>
           ) : (
-            <div key={i} className="ml-auto max-w-[85%]">
-              <div className="rounded-2xl rounded-tr-sm bg-primary px-4 py-2.5 text-[15px] leading-snug text-primary-foreground">
+            <div key={i} className="animate-fade-up ml-auto max-w-[85%]">
+              <div className="rounded-2xl rounded-tr-sm bg-primary px-4 py-2.5 text-[15px] leading-snug text-primary-foreground shadow-sm shadow-primary/25">
                 {b.text}
               </div>
             </div>
@@ -133,21 +133,22 @@ export function ChatRoom({ state, onRefresh }: { state: RoomState; onRefresh: ()
 
         {/* Active question's quick-reply chips */}
         {activeRound0 && (
-          <div className="max-w-[85%]">
+          <div className="animate-fade-up max-w-[85%]">
             <div className="mb-1 flex items-center gap-1 text-xs font-medium text-primary">
               <Sparkles className="size-3" /> Hunch
             </div>
-            <div className="rounded-2xl rounded-tl-sm border border-border bg-card px-4 py-2.5 text-[15px] leading-snug">
+            <div className="rounded-2xl rounded-tl-sm border border-border bg-card px-4 py-2.5 text-[15px] leading-snug shadow-sm ring-1 ring-foreground/3">
               {activeRound0.prompt}
             </div>
             {activeRound0.chips && (
               <div className="mt-2 flex flex-wrap gap-2">
-                {activeRound0.chips.map((c) => (
+                {activeRound0.chips.map((c, ci) => (
                   <button
                     key={c.value}
                     onClick={() => pickRound0(activeRound0, c.value)}
                     disabled={saving}
-                    className="rounded-full border border-border bg-card px-4 py-2 text-sm font-medium transition active:scale-95 hover:border-primary hover:text-primary"
+                    style={{ animationDelay: `${0.05 + ci * 0.05}s` }}
+                    className="animate-chip rounded-full border border-border bg-card px-4 py-2 text-sm font-medium shadow-sm transition active:scale-95 hover:border-primary hover:text-primary hover:shadow-md"
                   >
                     {c.emoji ? `${c.emoji} ` : ""}
                     {c.label}
@@ -167,7 +168,9 @@ export function ChatRoom({ state, onRefresh }: { state: RoomState; onRefresh: ()
         )}
 
         {state.status === "revealing" && (
-          <div className="text-sm text-muted-foreground">Hunch is finding the yes…</div>
+          <div className="flex animate-pulse items-center gap-1.5 text-sm font-medium text-primary">
+            <Sparkles className="size-4" /> Hunch is finding the yes…
+          </div>
         )}
 
         <div ref={bottomRef} />
@@ -187,12 +190,13 @@ export function ChatRoom({ state, onRefresh }: { state: RoomState; onRefresh: ()
             }}
           />
           {activeRound0?.optional && !text.trim() ? (
-            <Button variant="secondary" disabled={saving} onClick={() => pickRound0(activeRound0!, "")}>
+            <Button variant="secondary" className="h-11 shrink-0 rounded-xl" disabled={saving} onClick={() => pickRound0(activeRound0!, "")}>
               Skip
             </Button>
           ) : (
             <Button
               size="icon"
+              className="size-11 shrink-0 rounded-xl glow-primary"
               disabled={saving || !text.trim()}
               onClick={() => (activeFollowup ? sendFollowup() : pickRound0(activeRound0!, text.trim()))}
             >
@@ -205,7 +209,7 @@ export function ChatRoom({ state, onRefresh }: { state: RoomState; onRefresh: ()
       {/* Host reveal control */}
       {state.is_host && state.status !== "revealing" && (
         <div className="border-t border-border pt-3">
-          <Button className="h-12 w-full rounded-full text-base" disabled={revealing || ready === 0} onClick={reveal}>
+          <Button className="h-12 w-full rounded-full text-base glow-primary" disabled={revealing || ready === 0} onClick={reveal}>
             <Sparkles className="size-4" />
             {revealing ? "Finding…" : `Find the yes (${ready}/${total})`}
           </Button>

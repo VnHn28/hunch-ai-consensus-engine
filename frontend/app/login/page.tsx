@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Sparkles, MailCheck } from "lucide-react";
 import { toast } from "sonner";
 
 const USERNAME_RE = /^[a-z0-9_]{3,20}$/;
@@ -61,70 +62,85 @@ function AuthInner() {
 
   if (checkEmail) {
     return (
-      <main className="mx-auto flex min-h-dvh max-w-sm flex-col justify-center gap-4 p-6">
-        <h1 className="text-4xl font-extrabold tracking-tight">
-          Hunch<span className="text-primary">.</span>
-        </h1>
-        <div className="rounded-2xl bg-card p-5">
-          <p className="font-medium">Confirm your email</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            We sent a confirmation link to {email}. Open it, then come back and log in.
-          </p>
+      <main className="mx-auto flex min-h-dvh max-w-sm flex-col justify-center gap-6 p-6">
+        <div className="stagger flex flex-col items-center gap-5 text-center">
+          <span className="grid size-16 place-items-center rounded-[1.4rem] bg-linear-to-br from-primary to-[#9b7bff] text-primary-foreground shadow-lg glow-primary">
+            <MailCheck className="size-8" />
+          </span>
+          <div>
+            <h1 className="font-display text-3xl font-semibold tracking-tight">Confirm your email</h1>
+            <p className="mt-2 text-sm text-muted-foreground">
+              We sent a confirmation link to <span className="font-medium text-foreground">{email}</span>. Open it,
+              then come back and log in.
+            </p>
+          </div>
         </div>
       </main>
     );
   }
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-sm flex-col justify-center gap-5 p-6">
-      <h1 className="font-display text-5xl font-semibold tracking-tight">
-        Hunch<span className="text-primary">.</span>
-      </h1>
+    <main className="mx-auto flex min-h-dvh max-w-sm flex-col justify-center gap-7 p-6">
+      <div className="stagger flex flex-col gap-7">
+        <div className="flex flex-col items-center gap-3.5 text-center">
+          <span className="grid size-14 place-items-center rounded-[1.2rem] bg-linear-to-br from-primary to-[#9b7bff] text-primary-foreground shadow-lg glow-primary">
+            <Sparkles className="size-7" />
+          </span>
+          <div>
+            <h1 className="font-display text-5xl font-semibold tracking-tight">
+              Hunch<span className="text-primary">.</span>
+            </h1>
+            <p className="mt-1.5 text-sm text-muted-foreground">Everyone already agrees. Sign in to find it.</p>
+          </div>
+        </div>
 
-      <Tabs defaultValue="signup">
-        <TabsList className="w-full">
-          <TabsTrigger className="flex-1" value="signup">Create account</TabsTrigger>
-          <TabsTrigger className="flex-1" value="login">Log in</TabsTrigger>
-        </TabsList>
+        <div className="rounded-[1.75rem] border border-border/60 bg-card/70 p-5 shadow-xl shadow-foreground/6 backdrop-blur-xl">
+          <Tabs defaultValue="signup">
+            <TabsList className="w-full rounded-2xl bg-secondary/70 p-1">
+              <TabsTrigger className="flex-1 rounded-xl" value="signup">Create account</TabsTrigger>
+              <TabsTrigger className="flex-1 rounded-xl" value="login">Log in</TabsTrigger>
+            </TabsList>
 
-        <TabsContent value="signup" className="mt-4 flex flex-col gap-3">
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="su-username">Username</Label>
-            <Input id="su-username" autoCapitalize="none" placeholder="ramenfan" value={username}
-              onChange={(e) => setUsername(e.target.value)} />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="su-email">Email</Label>
-            <Input id="su-email" type="email" inputMode="email" autoComplete="email" value={email}
-              onChange={(e) => setEmail(e.target.value)} />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="su-password">Password</Label>
-            <Input id="su-password" type="password" autoComplete="new-password" value={password}
-              onChange={(e) => setPassword(e.target.value)} />
-          </div>
-          <Button className="mt-1 h-12 text-base" onClick={signUp} disabled={loading || !email || !password || !username}>
-            {loading ? "Creating…" : "Create account"}
-          </Button>
-        </TabsContent>
+            <TabsContent value="signup" className="stagger mt-5 flex flex-col gap-3">
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="su-username">Username</Label>
+                <Input id="su-username" autoCapitalize="none" placeholder="ramenfan" value={username}
+                  onChange={(e) => setUsername(e.target.value)} />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="su-email">Email</Label>
+                <Input id="su-email" type="email" inputMode="email" autoComplete="email" value={email}
+                  onChange={(e) => setEmail(e.target.value)} />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="su-password">Password</Label>
+                <Input id="su-password" type="password" autoComplete="new-password" value={password}
+                  onChange={(e) => setPassword(e.target.value)} />
+              </div>
+              <Button className="mt-1 h-12 text-base glow-primary" onClick={signUp} disabled={loading || !email || !password || !username}>
+                {loading ? "Creating…" : "Create account"}
+              </Button>
+            </TabsContent>
 
-        <TabsContent value="login" className="mt-4 flex flex-col gap-3">
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="li-email">Email</Label>
-            <Input id="li-email" type="email" inputMode="email" autoComplete="email" value={email}
-              onChange={(e) => setEmail(e.target.value)} />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="li-password">Password</Label>
-            <Input id="li-password" type="password" autoComplete="current-password" value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && logIn()} />
-          </div>
-          <Button className="mt-1 h-12 text-base" onClick={logIn} disabled={loading || !email || !password}>
-            {loading ? "Signing in…" : "Log in"}
-          </Button>
-        </TabsContent>
-      </Tabs>
+            <TabsContent value="login" className="stagger mt-5 flex flex-col gap-3">
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="li-email">Email</Label>
+                <Input id="li-email" type="email" inputMode="email" autoComplete="email" value={email}
+                  onChange={(e) => setEmail(e.target.value)} />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="li-password">Password</Label>
+                <Input id="li-password" type="password" autoComplete="current-password" value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && logIn()} />
+              </div>
+              <Button className="mt-1 h-12 text-base glow-primary" onClick={logIn} disabled={loading || !email || !password}>
+                {loading ? "Signing in…" : "Log in"}
+              </Button>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
     </main>
   );
 }

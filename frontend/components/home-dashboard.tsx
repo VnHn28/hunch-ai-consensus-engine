@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { CategoryGrid } from "@/components/category-grid";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Users, LogOut } from "lucide-react";
 import { getCategory } from "@/lib/categories";
 import type { HomeData } from "@/lib/types";
@@ -38,16 +39,23 @@ export function HomeDashboard({ initial }: { initial: HomeData }) {
   }
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-md flex-col gap-6 p-6">
+    <main className="stagger mx-auto flex min-h-dvh max-w-md flex-col gap-6 p-6">
       <header className="flex items-center justify-between">
-        <div>
-          <h1 className="font-display text-2xl font-semibold tracking-tight">
-            Hunch<span className="text-primary">.</span>
-          </h1>
-          <p className="text-sm text-muted-foreground">Hey @{home.profile.username}</p>
+        <div className="flex items-center gap-3">
+          <Avatar className="size-10">
+            <AvatarFallback className="bg-linear-to-br from-primary to-[#9b7bff] text-sm font-semibold text-primary-foreground">
+              {home.profile.username.slice(0, 2).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <div className="leading-tight">
+            <h1 className="font-display text-2xl font-semibold tracking-tight">
+              Hunch<span className="text-primary">.</span>
+            </h1>
+            <p className="text-sm text-muted-foreground">Hey @{home.profile.username}</p>
+          </div>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="secondary" size="sm" className="relative" onClick={() => router.push("/friends")}>
+          <Button variant="secondary" size="sm" className="relative rounded-full" onClick={() => router.push("/friends")}>
             <Users className="size-4" />
             Friends
             {home.incoming_requests > 0 && (
@@ -56,7 +64,7 @@ export function HomeDashboard({ initial }: { initial: HomeData }) {
               </Badge>
             )}
           </Button>
-          <Button variant="ghost" size="icon" aria-label="Sign out" onClick={signOut}>
+          <Button variant="ghost" size="icon" className="rounded-full" aria-label="Sign out" onClick={signOut}>
             <LogOut className="size-4" />
           </Button>
         </div>
@@ -69,22 +77,24 @@ export function HomeDashboard({ initial }: { initial: HomeData }) {
 
       {home.invites.length > 0 && (
         <section className="flex flex-col gap-2">
-          <h2 className="text-lg font-semibold">Invited by friends</h2>
+          <h2 className="font-display text-lg font-semibold">Invited by friends</h2>
           {home.invites.map((inv) => {
             const cat = getCategory(inv.category);
             return (
               <button
                 key={inv.code}
                 onClick={() => router.push(`/room/${inv.code}`)}
-                className="flex items-center justify-between rounded-2xl bg-card p-4 text-left active:scale-[0.98]"
+                className="lift flex items-center justify-between gap-3 rounded-3xl border border-border/60 bg-card p-4 text-left shadow-sm ring-1 ring-foreground/3 hover:shadow-md"
               >
-                <span>
-                  <span className="font-medium">{inv.question}</span>
+                <span className="min-w-0">
+                  <span className="block truncate font-medium">{inv.question}</span>
                   <span className="block text-xs text-muted-foreground">
                     @{inv.inviter} · {cat?.label ?? inv.category}
                   </span>
                 </span>
-                <span className="text-sm font-medium text-primary">Join →</span>
+                <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary">
+                  Join →
+                </span>
               </button>
             );
           })}

@@ -23,7 +23,7 @@ export function RevealCard({
 
   return (
     <div className="flex flex-col gap-4 pb-6">
-      <div className="rounded-3xl border border-success/40 bg-card p-5 shadow-sm">
+      <div className="animate-pop rounded-3xl border border-success/40 bg-card p-5 shadow-lg shadow-success/10 ring-1 ring-success/10">
         <p className="text-xs font-semibold uppercase tracking-wide text-success">The pick</p>
         <h3 className="mt-1 font-display text-3xl font-semibold leading-tight">
           {v?.name ?? result.cuisine}
@@ -60,7 +60,7 @@ export function RevealCard({
           />
         )}
 
-        <ul className="mt-4 flex flex-col gap-2">
+        <ul className="stagger mt-4 flex flex-col gap-2">
           {result.reasons.map((r) => (
             <li key={r} className="flex items-start gap-2">
               <Check className="mt-0.5 size-4 shrink-0 text-success" />
@@ -74,7 +74,7 @@ export function RevealCard({
             href={v.maps_url}
             target="_blank"
             rel="noreferrer"
-            className="mt-4 block rounded-full bg-primary py-3 text-center font-medium text-primary-foreground"
+            className="lift glow-primary mt-4 block rounded-full bg-primary py-3 text-center font-medium text-primary-foreground"
           >
             Open in Maps
           </a>

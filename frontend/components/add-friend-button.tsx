@@ -26,7 +26,7 @@ export function AddFriendButton({ username, self }: { username: string; self: bo
   }
 
   return (
-    <Button className="h-12 w-full text-base" onClick={add} disabled={loading}>
+    <Button className="h-12 w-full text-base glow-primary" onClick={add} disabled={loading}>
       <UserPlus className="size-4" />
       {loading ? "Sending…" : `Add @${username}`}
     </Button>

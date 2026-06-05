@@ -71,7 +71,7 @@ export function CreateRoom({
   }
 
   return (
-    <div className="flex flex-col gap-3 rounded-2xl bg-card p-5">
+    <div className="flex flex-col gap-3 rounded-3xl border border-border/60 bg-card p-5 shadow-sm ring-1 ring-foreground/3">
       <label className="text-sm text-muted-foreground">The question</label>
       <Input value={question} onChange={(e) => setQuestion(e.target.value)} />
 
@@ -87,14 +87,14 @@ export function CreateRoom({
                 setCoords(null);
               }}
             />
-            <Button type="button" variant="secondary" size="icon" aria-label="Use my location" onClick={useMyLocation}>
+            <Button type="button" variant="secondary" size="icon" className="size-11 shrink-0 rounded-xl" aria-label="Use my location" onClick={useMyLocation}>
               <MapPin className="size-4" />
             </Button>
           </div>
         </>
       )}
 
-      <Button className="mt-2 h-12 text-base" onClick={start} disabled={loading}>
+      <Button className="mt-2 h-12 text-base glow-primary" onClick={start} disabled={loading}>
         {loading ? "Starting…" : "Start the room"}
       </Button>
     </div>

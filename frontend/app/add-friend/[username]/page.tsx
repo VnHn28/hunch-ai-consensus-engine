@@ -21,7 +21,7 @@ export default async function AddFriendPage({ params }: { params: Promise<{ user
     .single();
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-sm flex-col items-center justify-center gap-5 p-6 text-center">
+    <main className="stagger mx-auto flex min-h-dvh max-w-sm flex-col items-center justify-center gap-5 p-6 text-center">
       {!profile ? (
         <>
           <p className="text-lg font-medium">No user @{handle}</p>
@@ -29,17 +29,19 @@ export default async function AddFriendPage({ params }: { params: Promise<{ user
         </>
       ) : (
         <>
-          <Avatar className="size-16">
-            <AvatarFallback className="bg-primary/15 text-xl text-primary">
+          <Avatar className="size-20">
+            <AvatarFallback className="bg-linear-to-br from-primary to-[#9b7bff] text-2xl font-semibold text-primary-foreground shadow-lg glow-primary">
               {(profile.display_name || profile.username).slice(0, 2).toUpperCase()}
             </AvatarFallback>
           </Avatar>
           <div>
-            <p className="text-xl font-semibold">@{profile.username}</p>
-            <p className="text-sm text-muted-foreground">wants to be Hunch friends?</p>
+            <p className="font-display text-2xl font-semibold">@{profile.username}</p>
+            <p className="mt-1 text-sm text-muted-foreground">wants to be Hunch friends?</p>
           </div>
-          <AddFriendButton username={profile.username} self={profile.id === user.id} />
-          <Link href="/" className="text-sm text-muted-foreground">Maybe later</Link>
+          <div className="flex w-full flex-col items-center gap-3">
+            <AddFriendButton username={profile.username} self={profile.id === user.id} />
+            <Link href="/" className="text-sm text-muted-foreground">Maybe later</Link>
+          </div>
         </>
       )}
     </main>

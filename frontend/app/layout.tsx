@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Fraunces } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
+import { AuroraBackground } from "@/components/aurora-background";
 import "./globals.css";
 
 const sans = Plus_Jakarta_Sans({ variable: "--font-sans", subsets: ["latin"] });
@@ -27,6 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${sans.variable} ${display.variable}`}>
       <body className="min-h-dvh antialiased">
+        <AuroraBackground />
         {children}
         <Toaster position="top-center" />
       </body>

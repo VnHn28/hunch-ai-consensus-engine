@@ -64,10 +64,10 @@ export function InviteFriends({ roomId }: { roomId: string }) {
         ) : (
           <div className="flex max-h-80 flex-col gap-2 overflow-y-auto">
             {friends.map((u) => (
-              <div key={u.id} className="flex items-center justify-between gap-3 rounded-xl bg-card p-2.5">
+              <div key={u.id} className="flex items-center justify-between gap-3 rounded-2xl border border-border/60 bg-card p-2.5">
                 <div className="flex items-center gap-2.5">
                   <Avatar className="size-8">
-                    <AvatarFallback className="bg-primary/15 text-primary">
+                    <AvatarFallback className="bg-linear-to-br from-primary to-[#9b7bff] text-xs font-semibold text-primary-foreground">
                       {(u.display_name || u.username).slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>

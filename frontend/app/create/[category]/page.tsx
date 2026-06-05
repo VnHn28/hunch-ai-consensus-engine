@@ -23,9 +23,13 @@ export default async function CreatePage({ params }: { params: Promise<{ categor
   }
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-md flex-col gap-5 p-6">
+    <main className="stagger mx-auto flex min-h-dvh max-w-md flex-col gap-5 p-6">
       <header className="flex items-center gap-2">
-        <Link href="/" aria-label="Back" className="text-muted-foreground">
+        <Link
+          href="/"
+          aria-label="Back"
+          className="grid size-9 place-items-center rounded-full bg-card text-muted-foreground ring-1 ring-border transition-colors hover:text-foreground"
+        >
           <ChevronLeft className="size-5" />
         </Link>
         <h1 className="font-display text-xl font-semibold">{meta.label}</h1>

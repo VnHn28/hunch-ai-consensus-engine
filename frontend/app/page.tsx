@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { HomeDashboard } from "@/components/home-dashboard";
 import { Button } from "@/components/ui/button";
+import { Sparkles, ShieldCheck } from "lucide-react";
 import type { HomeData } from "@/lib/types";
 
 export default async function Home() {
@@ -21,24 +22,35 @@ export default async function Home() {
   }
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-center gap-6 p-6">
-      <header>
-        <h1 className="font-display text-6xl font-semibold tracking-tight">
-          Hunch<span className="text-primary">.</span>
-        </h1>
-        <p className="mt-3 text-lg text-muted-foreground">
-          Everyone already agrees. Hunch just finds it.
+    <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-center gap-7 p-6">
+      <div className="stagger flex flex-col gap-6">
+        <span className="grid size-14 place-items-center rounded-[1.2rem] bg-linear-to-br from-primary to-[#9b7bff] text-primary-foreground shadow-lg glow-primary">
+          <Sparkles className="size-7" />
+        </span>
+
+        <header>
+          <h1 className="font-display text-6xl font-semibold tracking-tight">
+            Hunch<span className="text-primary">.</span>
+          </h1>
+          <p className="mt-3 text-lg text-muted-foreground">
+            Everyone already agrees. Hunch just finds it.
+          </p>
+        </header>
+
+        <p className="text-muted-foreground">
+          AI group decisions, minus the social pressure. Everyone answers privately — Hunch finds the
+          option you already agree on.
         </p>
-      </header>
 
-      <p className="text-muted-foreground">
-        AI group decisions, minus the social pressure. Everyone answers privately — Hunch finds the
-        option you already agree on.
-      </p>
+        <Button className="h-12 text-base glow-primary" render={<Link href="/login" />}>
+          Get started
+        </Button>
 
-      <Button className="h-12 text-base" render={<Link href="/login" />}>
-        Get started
-      </Button>
+        <p className="inline-flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
+          <ShieldCheck className="size-3.5 text-success" />
+          Private by design — nobody sees your answer before the reveal.
+        </p>
+      </div>
     </main>
   );
 }

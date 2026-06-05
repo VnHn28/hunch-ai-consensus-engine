@@ -16,10 +16,12 @@ function initials(u: FriendUser) {
 
 function Row({ user, right }: { user: FriendUser; right?: React.ReactNode }) {
   return (
-    <div className="flex items-center justify-between gap-3 rounded-xl bg-card p-3">
+    <div className="flex items-center justify-between gap-3 rounded-2xl border border-border/60 bg-card p-3 shadow-sm ring-1 ring-foreground/3">
       <div className="flex items-center gap-3">
         <Avatar className="size-9">
-          <AvatarFallback className="bg-primary/15 text-primary">{initials(user)}</AvatarFallback>
+          <AvatarFallback className="bg-linear-to-br from-primary to-[#9b7bff] text-xs font-semibold text-primary-foreground">
+            {initials(user)}
+          </AvatarFallback>
         </Avatar>
         <div className="leading-tight">
           <p className="font-medium">@{user.username}</p>
@@ -88,16 +90,20 @@ export function FriendsClient({ initial, username }: { initial: SocialData; user
   }
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-md flex-col gap-6 p-6">
+    <main className="stagger mx-auto flex min-h-dvh max-w-md flex-col gap-6 p-6">
       <header className="flex items-center gap-2">
-        <Link href="/" aria-label="Back" className="text-muted-foreground">
+        <Link
+          href="/"
+          aria-label="Back"
+          className="grid size-9 place-items-center rounded-full bg-card text-muted-foreground ring-1 ring-border transition-colors hover:text-foreground"
+        >
           <ChevronLeft className="size-5" />
         </Link>
         <h1 className="font-display text-xl font-semibold">Friends</h1>
       </header>
 
       {/* Your add-me code/link */}
-      <section className="flex flex-col gap-2 rounded-2xl bg-card p-4">
+      <section className="flex flex-col gap-2 rounded-3xl border border-border/60 bg-card p-4 shadow-sm ring-1 ring-foreground/3">
         <p className="text-sm text-muted-foreground">Your friend code</p>
         <div className="flex items-center justify-between">
           <span className="text-lg font-semibold text-primary">@{username}</span>
@@ -118,7 +124,7 @@ export function FriendsClient({ initial, username }: { initial: SocialData; user
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && search()}
           />
-          <Button onClick={search} disabled={searching || !query.trim()}>
+          <Button className="h-11 shrink-0 rounded-xl" onClick={search} disabled={searching || !query.trim()}>
             Search
           </Button>
         </div>
@@ -148,7 +154,7 @@ export function FriendsClient({ initial, username }: { initial: SocialData; user
       {/* Incoming requests */}
       {social.incoming.length > 0 && (
         <section className="flex flex-col gap-2">
-          <h2 className="text-lg font-semibold">Requests</h2>
+          <h2 className="font-display text-lg font-semibold">Requests</h2>
           {social.incoming.map((u) => (
             <Row
               key={u.id}

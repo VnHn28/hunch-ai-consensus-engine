@@ -131,8 +131,107 @@
   }
   body {
     @apply bg-background text-foreground;
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
   }
   html {
     @apply font-sans;
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
+/* ── Hunch · motion + atmosphere ─────────────────────────────────────────
+   A small, reusable kit of entrance reveals, looping ambient drifts, and
+   tactile press states. Components opt in with class names; everything is
+   GPU-friendly (transform/opacity) and disabled under reduced-motion. */
+
+@keyframes hunch-fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hunch-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes hunch-pop {
+  0%   { opacity: 0; transform: scale(0.9); }
+  60%  { transform: scale(1.03); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes hunch-pop-chip {
+  0%   { opacity: 0; transform: translateY(6px) scale(0.92); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+/* Three independent ambient drifts so the background orbs never sync up. */
+@keyframes hunch-float-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(4%, -6%, 0) scale(1.08); }
+}
+@keyframes hunch-float-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  50%      { transform: translate3d(-5%, 5%, 0) scale(1); }
+}
+@keyframes hunch-float-c {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(6%, 5%, 0) scale(1.12); }
+}
+@keyframes hunch-shimmer {
+  100% { background-position: 200% 0; }
+}
+
+@layer utilities {
+  .animate-fade-up { animation: hunch-fade-up 0.6s cubic-bezier(0.22, 0.95, 0.36, 1) both; }
+  .animate-fade-in { animation: hunch-fade-in 0.7s ease both; }
+  .animate-pop     { animation: hunch-pop 0.5s cubic-bezier(0.22, 1.15, 0.4, 1) both; }
+  .animate-chip    { animation: hunch-pop-chip 0.32s cubic-bezier(0.22, 1.1, 0.4, 1) both; }
+
+  /* Direct children rise in sequence on mount — orchestrated page loads. */
+  .stagger > * { animation: hunch-fade-up 0.55s cubic-bezier(0.22, 0.95, 0.36, 1) both; }
+  .stagger > *:nth-child(1) { animation-delay: 0.04s; }
+  .stagger > *:nth-child(2) { animation-delay: 0.10s; }
+  .stagger > *:nth-child(3) { animation-delay: 0.16s; }
+  .stagger > *:nth-child(4) { animation-delay: 0.22s; }
+  .stagger > *:nth-child(5) { animation-delay: 0.28s; }
+  .stagger > *:nth-child(6) { animation-delay: 0.34s; }
+  .stagger > *:nth-child(7) { animation-delay: 0.40s; }
+  .stagger > *:nth-child(8) { animation-delay: 0.46s; }
+
+  /* Tactile surface: lifts on hover, settles on press. */
+  .lift {
+    transition: transform 0.25s cubic-bezier(0.22, 0.95, 0.36, 1),
+                box-shadow 0.25s ease, opacity 0.25s ease;
+  }
+  @media (hover: hover) {
+    .lift:hover { transform: translateY(-3px); }
+  }
+  .lift:active { transform: translateY(0) scale(0.98); }
+
+  /* Soft brand glow beneath primary CTAs. */
+  .glow-primary {
+    box-shadow:
+      0 12px 30px -10px color-mix(in oklch, var(--primary) 65%, transparent),
+      0 2px 8px -3px color-mix(in oklch, var(--primary) 45%, transparent);
+  }
+
+  /* Loading shimmer fill for skeleton-style placeholders. */
+  .shimmer {
+    background: linear-gradient(
+      100deg,
+      var(--muted) 30%,
+      color-mix(in oklch, var(--muted), var(--foreground) 6%) 50%,
+      var(--muted) 70%
+    );
+    background-size: 200% 100%;
+    animation: hunch-shimmer 1.6s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }

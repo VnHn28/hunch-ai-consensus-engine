@@ -38,8 +38,12 @@ export function RoomClient({ initial, userId }: { initial: RoomState; userId: st
   return (
     <main className="mx-auto flex h-dvh max-w-md flex-col p-5">
       <header className="flex items-center justify-between gap-3 pb-3">
-        <div className="flex min-w-0 items-center gap-1.5">
-          <Link href="/" aria-label="Home" className="shrink-0 text-muted-foreground">
+        <div className="flex min-w-0 items-center gap-2">
+          <Link
+            href="/"
+            aria-label="Home"
+            className="grid size-9 shrink-0 place-items-center rounded-full bg-card text-muted-foreground ring-1 ring-border transition-colors hover:text-foreground"
+          >
             <ChevronLeft className="size-5" />
           </Link>
           <h2 className="truncate font-display text-lg font-semibold">{state.question}</h2>
