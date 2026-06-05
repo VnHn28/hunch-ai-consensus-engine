@@ -98,6 +98,8 @@ cd frontend && npx tsc --noEmit && npm run build
 cd frontend && npx playwright install --with-deps && npx playwright test
 ```
 
+---
+
 ## Pre-demo checklist (full multi-user reveal)
 1. Two browsers / two accounts. A creates a room; both open the link and sign in.
 2. Both submit different answers — confirm "X of 2 answered" updates live.
