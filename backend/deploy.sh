@@ -13,5 +13,6 @@ supabase link --project-ref "$PROJECT_REF"
 supabase db push
 supabase secrets set OPENAI_API_KEY="$OPENAI_API_KEY" GOOGLE_PLACES_API_KEY="$GOOGLE_PLACES_API_KEY"
 supabase functions deploy reveal-decision
+supabase functions deploy consensus
 
 echo "Done. Remember to set the frontend env vars and Supabase Auth redirect URLs."
